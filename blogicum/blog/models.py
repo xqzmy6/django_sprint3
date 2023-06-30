@@ -8,16 +8,20 @@ class SelfTitle(models.Model):
     def __str__(self):
         return self.title
 
-    class Meta:
-        abstract = True
-
-
-class Category(SelfTitle):
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
         help_text='Снимите галочку, '
         'чтобы скрыть публикацию.')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено')
+
+    class Meta:
+        abstract = True
+
+
+class Category(SelfTitle):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     slug = models.SlugField(
         max_length=64, unique=True,
@@ -26,9 +30,6 @@ class Category(SelfTitle):
         'разрешены символы латиницы, '
         'цифры, дефис и подчёркивание.')
     description = models.TextField(verbose_name='Описание')
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name_plural = 'Категории'
@@ -44,9 +45,6 @@ class Location(models.Model):
         verbose_name='Опубликовано',
         help_text='Снимите галочку, '
         'чтобы скрыть публикацию.')
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name = 'местоположение'
@@ -57,11 +55,6 @@ class Post(SelfTitle):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE, verbose_name='Автор публикации')
-    is_published = models.BooleanField(
-        default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, '
-        'чтобы скрыть публикацию.')
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
