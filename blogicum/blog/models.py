@@ -5,9 +5,6 @@ User = get_user_model()
 
 
 class SelfTitle(models.Model):
-    def __str__(self):
-        return self.title
-
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -34,6 +31,9 @@ class Category(SelfTitle):
     class Meta:
         verbose_name_plural = 'Категории'
         verbose_name = 'категория'
+
+    def __str__(self):
+        return self.title
 
 
 class Location(SelfTitle):
@@ -74,3 +74,6 @@ class Post(SelfTitle):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         ordering = ('-pub_date',)
+
+    def __str__(self):
+        return self.title
