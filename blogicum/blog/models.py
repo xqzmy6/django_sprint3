@@ -36,15 +36,10 @@ class Category(SelfTitle):
         verbose_name = 'категория'
 
 
-class Location(models.Model):
+class Location(SelfTitle):
     name = models.CharField(
         max_length=256,
         verbose_name='Название места')
-    is_published = models.BooleanField(
-        default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, '
-        'чтобы скрыть публикацию.')
 
     class Meta:
         verbose_name = 'местоположение'
@@ -74,9 +69,6 @@ class Post(SelfTitle):
         null=True,
         verbose_name='Категория',
         related_name='posts')
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name = 'публикация'
